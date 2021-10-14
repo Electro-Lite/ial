@@ -80,7 +80,6 @@ void Stack_Error( int error_code ) {
  * @param stack Ukazatel na strukturu zásobníku
  */
 void Stack_Init( Stack *stack ) {
-    solved = FALSE; /* V případě řešení, smažte tento řádek! */
 		stack -> topIndex=-1;
 
 }
@@ -95,7 +94,6 @@ void Stack_Init( Stack *stack ) {
  * @returns Nenulovou hodnotu v případě, že je zásobník prázdný, jinak nulu
  */
 int Stack_IsEmpty( const Stack *stack ) {
-    solved = FALSE; /* V případě řešení, smažte tento řádek! */
 		if (stack -> topIndex == -1) {
 			return 1;
 		}
@@ -115,7 +113,6 @@ int Stack_IsEmpty( const Stack *stack ) {
  * @returns Nenulovou hodnotu v případě, že je zásobník plný, jinak nulu
  */
 int Stack_IsFull( const Stack *stack ) {
-    solved = FALSE; /* V případě řešení, smažte tento řádek! */
 		if (stack -> topIndex >= STACK_SIZE-1) {
 			return 1;
 		}
@@ -136,7 +133,6 @@ int Stack_IsFull( const Stack *stack ) {
  */
 void Stack_Top( const Stack *stack, char *dataPtr ) {
 
-    solved = FALSE; /* V případě řešení, smažte tento řádek! */
 		if(Stack_IsEmpty(stack)==0){
 			*dataPtr=(stack -> array[(stack->topIndex)]);
 		}
@@ -156,7 +152,6 @@ void Stack_Top( const Stack *stack, char *dataPtr ) {
  * @param stack Ukazatel na inicializovanou strukturu zásobníku
  */
 void Stack_Pop( Stack *stack ) {
-    solved = FALSE; /* V případě řešení, smažte tento řádek! */
 		stack -> array[stack -> topIndex] = EOF; //TODO smazání řádku musí být implementováno jinak
 		stack -> topIndex = stack -> topIndex -1;
 }
@@ -173,7 +168,6 @@ void Stack_Pop( Stack *stack ) {
  * @param data Znak k vložení
  */
 void Stack_Push( Stack *stack, char data ) {
-    solved = FALSE; /* V případě řešení, smažte tento řádek! */
 		if (Stack_IsFull		(stack)==0) {
 			stack -> topIndex = stack -> topIndex + 1;
 			stack -> array[stack -> topIndex] = data;
