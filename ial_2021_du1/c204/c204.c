@@ -69,7 +69,17 @@ int solved;
  * @param postfixExpressionLength Ukazatel na aktuální délku výsledného postfixového výrazu
  */
 void untilLeftPar( Stack *stack, char *postfixExpression, unsigned *postfixExpressionLength ) {
-
+  /*
+    while (1){
+      char Poped_Char=Stack_Pop(Stack);
+      if (Poped_Char!="(") {
+        break;
+      } else {
+        printf("%c",Poped_Char);
+      }
+    }
+  */
+  return;
 }
 
 /**
@@ -91,10 +101,7 @@ void untilLeftPar( Stack *stack, char *postfixExpression, unsigned *postfixExpre
 void doOperation( Stack *stack, char c, char *postfixExpression, unsigned *postfixExpressionLength ) {
   //implementace přes keyword bude o mnoho lepší, škoda že není v Cčku
   char Top_Char=Stack_Top(stack);
-  if (Stack_IsEmpty(stack)==true | Top_Char == '(') {
-    Stack_Push(stack,c);
-  }
-  else if ( (c == '=' & (Top_Char =='+' | '-' | '*' | '/' | '%') ) ) {
+  if (Stack_IsEmpty(stack)==true | Top_Char == '(') { //vložené závory by mohli selhat TODO
     Stack_Push(stack,c);
   }
   else if ((c=='/' | '*' | '%')&(Top_Char=='+' | '-')){
@@ -155,15 +162,29 @@ void doOperation( Stack *stack, char c, char *postfixExpression, unsigned *postf
  * @returns Znakový řetězec obsahující výsledný postfixový výraz
  */
 char *infix2postfix( const char *infixExpression ) {
-  int Pos=0;
-  if (infixExpression[Pos]==')') {
-    untilLeftPar();
+  postfixExpression = (char *) malloc(MAX_LEN);
+  int Infix_Pos=0;int Postfix_Pos=0; // TODO potřeba posunou patřičně i po fci untilLeftPar
+  char Current_char;
+  while (1) {
+    Current_char= infixExpression[Infix_Pos];
+    if (Current_char==')') {
+      untilLeftPar();
+    }
+    else if (Current_char== '+' | '-' | '*' | '/' | '%'  {
+      doOperation( /*Stack *stack*/, /* char c*/ Current_char, /*char *postfixExpression*/ postfixExpression , /*unsigned *postfixExpressionLength)*/ ;
+    }
+    else if (Current_char=='=') {
+      // přidej ho na Postfix_Pos
+    }
+    else if (Current_char !== NULL){
+      // add to postfixExpression TODO
+    }
+
+  Infix_Pos=Infix_Pos+1;
   }
 
 
 
-    solved = FALSE; /* V případě řešení smažte tento řádek! */
-    return NULL; /* V případě řešení můžete smazat tento řádek. */
 }
 
 /* Konec c204.c */
