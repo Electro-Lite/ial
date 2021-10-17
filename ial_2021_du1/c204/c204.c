@@ -89,7 +89,21 @@ void untilLeftPar( Stack *stack, char *postfixExpression, unsigned *postfixExpre
  * @param postfixExpressionLength Ukazatel na aktuální délku výsledného postfixového výrazu
  */
 void doOperation( Stack *stack, char c, char *postfixExpression, unsigned *postfixExpressionLength ) {
-
+  //implementace přes keyword bude o mnoho lepší, škoda že není v Cčku
+  char Top_Char=Stack_Top(stack);
+  if (Stack_IsEmpty(stack)==true | Top_Char == '(') {
+    Stack_Push(stack,c);
+  }
+  else if ( (c == '=' & (Top_Char =='+' | '-' | '*' | '/' | '%') ) ) {
+    Stack_Push(stack,c);
+  }
+  else if ((c=='/' | '*' | '%')&(Top_Char=='+' | '-')){
+    Stack_Push(stack,c);
+  } else{ //je tam vyšší nebbo stejná priorita
+    postfixExpression[postfixExpressionLength]=Top_Char;
+    Stack_Pop(stack);
+    doOperation(stack,c,postfixExpression,postfixExpressionLength); //opakování/rekurze
+  }
 }
 
 /**
@@ -141,6 +155,12 @@ void doOperation( Stack *stack, char c, char *postfixExpression, unsigned *postf
  * @returns Znakový řetězec obsahující výsledný postfixový výraz
  */
 char *infix2postfix( const char *infixExpression ) {
+  int Pos=0;
+  if (infixExpression[Pos]==')') {
+    untilLeftPar();
+  }
+
+
 
     solved = FALSE; /* V případě řešení smažte tento řádek! */
     return NULL; /* V případě řešení můžete smazat tento řádek. */
