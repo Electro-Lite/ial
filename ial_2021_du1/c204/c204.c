@@ -99,11 +99,19 @@ void untilLeftPar( Stack *stack, char *postfixExpression, unsigned *postfixExpre
  * @param postfixExpression Znakový řetězec obsahující výsledný postfixový výraz
  * @param postfixExpressionLength Ukazatel na aktuální délku výsledného postfixového výrazu
  */
- // * / % , + - , > < =< => , = 
 void doOperation( Stack *stack, char c, char *postfixExpression, unsigned *postfixExpressionLength ) {
-
-
-
+  //implementace přes keyword bude o mnoho lepší, škoda že není v Cčku
+  char Top_Char=Stack_Top(stack);
+  if (Stack_IsEmpty(stack)==true | Top_Char == '(') { //vložené závory by mohli selhat TODO
+    Stack_Push(stack,c);
+  }
+  else if ((c=='/' | '*' | '%')&(Top_Char=='+' | '-')){
+    Stack_Push(stack,c);
+  } else{ //je tam vyšší nebbo stejná priorita
+    postfixExpression[postfixExpressionLength]=Top_Char;
+    Stack_Pop(stack);
+    doOperation(stack,c,postfixExpression,postfixExpressionLength); //opakování/rekurze
+  }
 }
 
 /**
@@ -155,8 +163,26 @@ void doOperation( Stack *stack, char c, char *postfixExpression, unsigned *postf
  * @returns Znakový řetězec obsahující výsledný postfixový výraz
  */
 char *infix2postfix( const char *infixExpression ) {
-    solved = FALSE; /* V případě řešení smažte tento řádek! */
+  postfixExpression = (char *) malloc(MAX_LEN);
+  int Infix_Pos=0;int Postfix_Pos=0; // TODO potřeba posunou patřičně i po fci untilLeftPar
+  char Current_char;
+  while (1) {
+    Current_char= infixExpression[Infix_Pos];
+    if (Current_char==')') {
+      untilLeftPar();
+    }
+    else if (Current_char== '+' | '-' | '*' | '/' | '%'  {
+      doOperation( /*Stack *stack*/, /* char c*/ Current_char, /*char *postfixExpression*/ postfixExpression , /*unsigned *postfixExpressionLength)*/ ;
+    }
+    else if (Current_char=='=') {
+      // přidej ho na Postfix_Pos
+    }
+    else if (Current_char !== NULL){
+      // add to postfixExpression TODO
+    }
 
+  Infix_Pos=Infix_Pos+1;
+  }
 
 
 
