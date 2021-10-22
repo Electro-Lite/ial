@@ -69,6 +69,19 @@ int solved;
  * @param postfixExpressionLength Ukazatel na aktuální délku výsledného postfixového výrazu
  */
 void untilLeftPar( Stack *stack, char *postfixExpression, unsigned *postfixExpressionLength ) {
+  char Top_Char;
+  while (1) {
+    Stack_Top(stack,&Top_Char);
+    Stack_Pop(stack);
+    if (Top_Char == ')') {
+      break;
+    }else{
+      postfixExpression[*postfixExpressionLength+1]=Top_Char;
+      postfixExpressionLength=postfixExpressionLength+1;
+    }
+
+  }
+  /*
     while (1) {
       char Poped_Char;
       Stack_Top(stack, &Poped_Char);
@@ -79,7 +92,7 @@ void untilLeftPar( Stack *stack, char *postfixExpression, unsigned *postfixExpre
       postfixExpression[*postfixExpressionLength]=Poped_Char;
       postfixExpressionLength = postfixExpressionLength + 1;
     }
-
+    */
 
 }
 
@@ -103,13 +116,14 @@ void doOperation( Stack *stack, char c, char *postfixExpression, unsigned *postf
   //implementace přes keyword bude o mnoho lepší, škoda že není v Cčku
   char Top_Char;
   Stack_Top(stack, &Top_Char);
-  if ( (Stack_IsEmpty(stack)==1) | (Top_Char == '(') ) { //vložené závory by mohli selhat TODO
+  if ( (Stack_IsEmpty(stack)==1) | (Top_Char == '(') ) {
     Stack_Push(stack,c);
   }
   else if ( ( (c=='/') | (c=='*') | (c=='%') )&( (Top_Char=='+') | (Top_Char=='-') ) ){
     Stack_Push(stack,c);
   } else{ //je tam vyšší nebbo stejná priorita
-    postfixExpression[*postfixExpressionLength]=Top_Char;
+    postfixExpression[*postfixExpressionLength+1]=Top_Char;
+    postfixExpressionLength=postfixExpressionLength+1;
     Stack_Pop(stack);
     doOperation(stack,c,postfixExpression,postfixExpressionLength); //opakování/rekurze
   }
@@ -168,9 +182,10 @@ char *infix2postfix( const char *infixExpression ) {
   stack = (Stack *) malloc(sizeof(Stack));
   Stack_Init(stack);
   char *postfixExpression = (char *) malloc(MAX_LEN);
-  unsigned int postfixExpressionLength=0;
+  unsigned int postfixExpressionLength=-1;
   int Infix_Pos=0;
   // TODO potřeba posunou patřičně i po fci untilLeftPar
+  char Top_Char;
   char Current_char;
   while (1) {
     Current_char= infixExpression[Infix_Pos];
@@ -180,29 +195,32 @@ char *infix2postfix( const char *infixExpression ) {
     else if ( (Current_char== '+') | (Current_char=='-') | (Current_char=='*') | (Current_char=='/') | (Current_char=='%') )  {
       doOperation(/*Stack *stack*/ stack, /* char c*/ Current_char,/*char *postfixExpression*/ postfixExpression , /*unsigned *postfixExpressionLength)*/ &postfixExpressionLength) ;
     }
-    else if (Stack_IsEmpty(stack)==1) {
-      // přidej ho na Postfix_Pos
-      while (postfixExpressionLength <=0) {
-        Stack_Top(stack,&postfixExpression[postfixExpressionLength+1]);
-        postfixExpressionLength=postfixExpressionLength+1;
-        Stack_Pop(stack);
 
-      }
+
+    else if (Current_char=='=') {
+        while (Stack_IsEmpty(stack)!=1) {
+          Stack_Top(stack,&Top_Char);
+          postfixExpression[postfixExpressionLength+1]=Top_Char;
+          postfixExpressionLength=postfixExpressionLength+1;
+          Stack_Pop(stack);
+        }
+
       postfixExpression[postfixExpressionLength+1]='=';
-
-    }
-    else if (Current_char != '\0'){
-      // add to postfixExpression TODO
       postfixExpressionLength=postfixExpressionLength+1;
-      postfixExpression[postfixExpressionLength] = Current_char;
-    }else {return '\0';}
+      return postfixExpression;
+    }
+    if (Current_char != '\0'){
+      // add to postfixExpression TODO
+      postfixExpression[postfixExpressionLength+1] = Current_char;
+      postfixExpressionLength=postfixExpressionLength+1;
+    }else {return postfixExpression;}
 
-  Infix_Pos=Infix_Pos+1;
+    Infix_Pos=Infix_Pos+1;
   }
-
-
-
-    return NULL; /* V případě řešení můžete smazat tento řádek. */
 }
+
+
+
+
 
 /* Konec c204.c */
