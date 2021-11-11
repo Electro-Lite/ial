@@ -19,11 +19,11 @@
  * leak). Keďže neinicializovaný ukazovateľ má nedefinovanú hodnotu, nie je
  * možné toto detegovať vo funkcii.
  */
-void bst_init(bst_node_t **tree) {
-  *&tree->key = 'a';                  //TODO nevim na co se má inicializovat xd
-  **tree->value = NULL;            //TODO nevim na co se má inicializovat xd
-  **tree-> left = NULL;
-  &&tree-> right = NULL;
+void bst_init(bst_node_t **node) {
+  (**node)->key = 'a';                  //TODO nevim na co se má inicializovat xd
+  (**node)->value = NULL;            //TODO nevim na co se má inicializovat xd
+  (**node)-> left = NULL;
+  (**node)-> right = NULL;
 
 
 }
