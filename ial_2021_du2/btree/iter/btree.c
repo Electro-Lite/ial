@@ -20,10 +20,10 @@
  * možné toto detegovať vo funkcii.
  */
 void bst_init(bst_node_t **node) {
-  (**node)->key = 'a';                  //TODO nevim na co se má inicializovat xd
-  (**node)->value = NULL;            //TODO nevim na co se má inicializovat xd
-  (**node)-> left = NULL;
-  (**node)-> right = NULL;
+  (*node)->key = 'a';                  //TODO nevim na co se má inicializovat xd
+  (*node)->value = NULL;            //TODO nevim na co se má inicializovat xd
+  (*node)-> left = NULL;
+  (*node)-> right = NULL;
 
 
 }
