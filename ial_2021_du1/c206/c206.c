@@ -79,8 +79,11 @@ void DLL_Error() {
  * @param list Ukazatel na strukturu dvousměrně vázaného seznamu
  */
 void DLL_Init( DLList *list ) {
+	list= (DLList *) malloc(sizeof(DLList)); //fakt idk co bych měl inicializovat TODO ?
+	list-> lastElement =NULL;
+	list-> activeElement =NULL;
+	list-> firstElement=NULL;
 
-    solved = FALSE; /* V případě řešení, smažte tento řádek! */
 }
 
 /**
@@ -91,8 +94,8 @@ void DLL_Init( DLList *list ) {
  * @param list Ukazatel na inicializovanou strukturu dvousměrně vázaného seznamu
  */
 void DLL_Dispose( DLList *list ) {
+	/*od prvního až do null ber pravý prvek a vynuluj ho*/
 
-    solved = FALSE; /* V případě řešení, smažte tento řádek! */
 }
 
 /**
