@@ -1,5 +1,6 @@
-void add1 (int ****ptr){
-  ***ptr++;
+void add1 (int *var){
+  printf("adding\n" );
+  *var=*var+1;
   return;
 }
 int main () {
@@ -18,9 +19,9 @@ int main () {
    pptr = &ptr;
 
    /* take the value using pptr */
+   add1(&var);
    printf("Value of var = %d\n", var );
    printf("Value available at *ptr = %d\n", *ptr );
-   add1(&ptr);
    printf("Value available at **pptr = %d\n", **pptr);
 
    return 0;

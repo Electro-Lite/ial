@@ -19,13 +19,11 @@
  * leak). Keďže neinicializovaný ukazovateľ má nedefinovanú hodnotu, nie je
  * možné toto detegovať vo funkcii.
  */
-void bst_init(bst_node_t **node) {
-  (*node)->key = 'a';                  //TODO nevim na co se má inicializovat xd
-  (*node)->value = NULL;            //TODO nevim na co se má inicializovat xd
-  (*node)-> left = NULL;
-  (*node)-> right = NULL;
-
-
+void bst_init(bst_node_t **tree) {
+  (*tree)->key = '\0';                  //TODO nevim na co se má inicializovat xd
+  (*tree)->value = 0;            //TODO nevim na co se má inicializovat xd
+  (*tree)-> left = NULL;
+  (*tree)-> right = NULL;
 }
 
 /*
@@ -38,6 +36,20 @@ void bst_init(bst_node_t **node) {
  * Funkciu implementujte iteratívne bez použitia vlastných pomocných funkcií.
  */
 bool bst_search(bst_node_t *tree, char key, int *value) {
+
+  if(tree!=NULL){
+    bst_node_t *node= (bst_node_t *) malloc(sizeof(bst_node_t));
+    while (node!=NULL) {
+      if (node->key == key) {
+        *value=node->key;
+        return true;
+      }else if (node->key > key) {
+        node=node->right;
+      }else {
+        node=node->left;
+      }
+    }
+  }
   return false;
 }
 
@@ -53,6 +65,29 @@ bool bst_search(bst_node_t *tree, char key, int *value) {
  * Funkciu implementujte iteratívne bez použitia vlastných pomocných funkcií.
  */
 void bst_insert(bst_node_t **tree, char key, int value) {
+  bst_node_t *node= (bst_node_t *) malloc(sizeof(bst_node_t));
+  bst_node_t *Last_node;
+  if (node !=NULL) {
+    node -> key = key;
+    node -> value = value;
+
+    while (node!=NULL) {
+      Last_node=node;
+      if (node->key == key) {
+        node->value = value;
+        return;
+      }else if (node->key > key) {
+        node=node->right;
+      }else {
+        node=node->left;
+      }
+    }
+    if (Last_node->key > key) {
+      Last_node->left = node;
+    }
+
+
+  }
 }
 
 /*
